@@ -2,42 +2,113 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Prompt2Video AI</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 24px;
-      background: #0b1120;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
-    .card {
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 24px;
-      background: #17243a;
-      border-radius: 16px;
-    }
-    button {
-      padding: 14px 20px;
-      border: 0;
-      border-radius: 8px;
-      background: #54d6a0;
-      font-weight: bold;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt2Video AI</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: #0b1120;
+  color: #f8fafc;
+}
+main { max-width: 700px; margin: auto; }
+header { padding: 15px 0; border-bottom: 1px solid #29354b; }
+.brand { color: #76e5b3; font-size: 23px; font-weight: bold; }
+.card {
+  background: #141f33;
+  border: 1px solid #2a3850;
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 20px;
+}
+p { color: #b6c5da; line-height: 1.6; }
+label { display: block; margin: 15px 0 8px; }
+textarea, select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #40506a;
+  background: #0b1120;
+  color: white;
+  font: inherit;
+}
+textarea { min-height: 130px; resize: vertical; }
+button, .button {
+  display: inline-block;
+  padding: 13px 16px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 8px;
+  background: #54d6a0;
+  color: #071b14;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+button { width: 100%; }
+.note { font-size: 13px; color: #9aabc3; }
+</style>
 </head>
 <body>
-  <div class="card">
-    <h1>Prompt2Video AI</h1>
-    <p>Website berhasil dimuat!</p>
-    <p>Langkah berikutnya: menghubungkan mesin AI video.</p>
-    <button onclick="window.open('https://wan-ai-wan2-1.hf.space/','_blank')">
-      Buka Generator Video
-    </button>
-  </div>
+<main>
+<header>
+  <div class="brand">✦ Prompt2Video AI</div>
+  <p>Ubah ide menjadi video dengan kecerdasan buatan.</p>
+</header>
+
+<section class="card">
+  <h1>AI Video Generator</h1>
+  <p>Tulis adegan yang kamu inginkan, lalu buka mesin pembuat video.</p>
+
+  <label for="prompt">Deskripsi video (prompt)</label>
+  <textarea id="prompt" placeholder="Contoh: A cinematic shot of an orange cat running through a rainy neon-lit street at night..."></textarea>
+
+  <label for="ratio">Rasio video tujuan</label>
+  <select id="ratio">
+    <option value="9:16">9:16 — TikTok / Reels / Shorts</option>
+    <option value="16:9">16:9 — YouTube</option>
+    <option value="1:1">1:1 — Kotak</option>
+  </select>
+
+  <button id="generate">Buka Generator Video AI</button>
+  <p class="note" id="status">Mesin AI berjalan pada layanan eksternal. Ketersediaan gratis mengikuti penyedia.</p>
+</section>
+
+<section class="card">
+  <h2>Cara menggunakan</h2>
+  <p>1. Tulis prompt dengan detail adegan, gerakan, dan gaya visual.</p>
+  <p>2. Tekan tombol generator untuk membuka layanan AI.</p>
+  <p>3. Tempel prompt ke layanan tersebut, lalu jalankan pembuatan video.</p>
+  <p class="note">Versi ini belum mengirim prompt secara otomatis ke mesin AI.</p>
+</section>
+</main>
+
+<script>
+const promptInput = document.getElementById("prompt");
+const ratioInput = document.getElementById("ratio");
+const status = document.getElementById("status");
+
+document.getElementById("generate").addEventListener("click", () => {
+  const prompt = promptInput.value.trim();
+  if (!prompt) {
+    status.textContent = "Tulis prompt video terlebih dahulu.";
+    promptInput.focus();
+    return;
+  }
+
+  const fullPrompt = prompt + " Video aspect ratio: " + ratioInput.value + ".";
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(fullPrompt);
+    }
+  } catch (e) {}
+
+  status.textContent = "Prompt siap. Jika belum tersalin otomatis, salin teks prompt lalu tempel di generator.";
+  window.open("https://wan-ai-wan2-1.hf.space/", "_blank");
+});
+</script>
 </body>
 </html>
